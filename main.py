@@ -3,6 +3,9 @@ import discord
 import requests
 import json
 import random
+
+#imports for replit db usage
+from replit import db
 #create an instance of client
 client = discord.Client()
 
@@ -19,6 +22,26 @@ def get_quote():
 
   quote = json_data[0]['q'] + " -" + json_data[0]['a']
   return(quote)
+
+def update_motivations(motivating_nessages):
+  if "motivations" in db.key():
+    motivations = db["motivations"]
+    motivations.append(motivating_nessages)
+    #save to database
+    db["motivations"] = motivations
+
+  else:
+    db["motivations"] = [motivating_nessages]
+
+
+#function to delete a motivating message from the db
+def delete_motivation(index):
+  #get the list of motivations from the db
+  motivations = db["motivations"]
+  if len(motivations) > index:
+    del motivations[index]
+    #save into the db again
+    db["motivations"] = motivations
 
 #register an event
 @client.event
