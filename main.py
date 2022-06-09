@@ -6,6 +6,9 @@ import requests
 import json
 import random
 from replit import db
+
+#import our web server
+from keep_on import keep_alive
 #create an instance of client
 client = discord.Client()
 
@@ -72,6 +75,6 @@ async def on_message(message):
       await message.channel.send("Response is turned off")
 
   
-
+keep_alive()
 client.run(os.getenv('TOKEN'))
   
