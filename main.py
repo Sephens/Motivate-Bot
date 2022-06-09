@@ -12,7 +12,9 @@ client = discord.Client()
 sad_words = ["sad","unhappy","hard","dipressed", "low", "lonely", "angry", "misserable","dipressing", "lost", "lack", "tired"]
 
 starter_motivations = [
-  "Cheer up!","Dont be sad!", "All is gonna be well", "You are going to pass through this!","God loves you remember"
+  "Cheer up!","Dont be sad!", "All is gonna be well", 
+  "You are going to pass through this!",
+  "God loves you remember"
 ]
 
 def get_quote():
@@ -24,7 +26,7 @@ def get_quote():
   return(quote)
 
 def update_motivations(motivating_nessages):
-  if "motivations" in db.key():
+  if "motivations" in db.keys():
     motivations = db["motivations"]
     motivations.append(motivating_nessages)
     #save to database
@@ -62,9 +64,27 @@ async def on_message(message):
     quote = get_quote()
     await message.channel.send(quote)
 
-  if any(word in msg for word in sad_words):
-    await message.channel.send(random.choice(starter_motivations))
-  
+  options = starter_motivations
+  if "motivations" in db.keys():
+    options = options + db["motivations"]
 
+
+  if any(word in msg for word in sad_words):
+    await message.channel.send(random.choice(options))
+
+  if msg.startswith("$new"):
+    motivating_message = msg.split("$new ",1)[1]
+    update_motivations(motivating_message)
+    await message.channel.send("New motivating message added")
+
+  if msg.startswith("$del"):
+    motivations = []
+    if "motivations" in db.keys():
+      index = int(msg.split("$del",1)[1])
+      delete_motivation(index)
+      motivations = db["motivations"]
+    await message.channel.send(motivations)
+      
+    
 client.run(os.getenv('TOKEN'))
   
