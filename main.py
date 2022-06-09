@@ -24,8 +24,6 @@ songs = ["Love me now -John Legend","I wish I knew -Steve Brukes","Bwana ni mwok
 if "responding" not in db.keys():
   db["responding"] = True
 
-
-
 def get_quote():
   response = requests.get("https://zenquotes.io/api/random")
 
@@ -73,8 +71,7 @@ async def on_message(message):
     elif value.lower() == ("false"):
       db["responding"] = False
       await message.channel.send("Response is turned off")
-
-  
+#Keep the bot running always with uptimerobot
 keep_alive()
 client.run(os.getenv('TOKEN'))
   
