@@ -38,10 +38,12 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+  #check if message is from the user
   if message.author == client.user:
     return
-    
   msg = message.content
+
+  #Bot response
   if db["responding"]:
       if message.content.startswith('Hello'):
         await message.channel.send('Hello dear! Tell me anything')
