@@ -17,18 +17,19 @@ sad_words = ["sad","unhappy","hard","dipressed", "low", "lonely", "angry", "miss
 starter_motivations = [
   "Cheer up!","Dont be sad!", "All is gonna be well", "You are going to pass through this!","God loves you remember"
 ]
-
+#Some random song groups that the bot can choose from
 song_groups = ["RNB","Gospel","HIPHOP", "Reggea" , "Instrumental"]
 songs = ["Love me now -John Legend","I wish I knew -Steve Brukes","Bwana ni mwokozi -Jeniffer", "Prisoners of guilt -Lucky Dube"]
 
+#check weather response is turned on in the database
 if "responding" not in db.keys():
   db["responding"] = True
-
+#using zenquotes API to get random quotes
 def get_quote():
   response = requests.get("https://zenquotes.io/api/random")
 
   json_data = json.loads(response.text)
-
+#This function returns quote and the author
   quote = json_data[0]['q'] + " -" + json_data[0]['a']
   return(quote)
 
@@ -71,6 +72,7 @@ async def on_message(message):
     elif value.lower() == ("false"):
       db["responding"] = False
       await message.channel.send("Response is turned off")
+      
 #Keep the bot running always with uptimerobot
 keep_alive()
 client.run(os.getenv('TOKEN'))
