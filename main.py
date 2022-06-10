@@ -13,7 +13,7 @@ from keep_on import keep_alive
 client = discord.Client()
 
 sad_words = ["sad","unhappy","hard","dipressed", "low", "lonely", "angry", "misserable","dipressing", "lost", "lack", "tired"]
-
+#some randm starter motivations
 starter_motivations = [
   "Cheer up!","Dont be sad!", "All is gonna be well", "You are going to pass through this!","God loves you remember"
 ]
